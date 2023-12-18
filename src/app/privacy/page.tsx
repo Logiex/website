@@ -8,10 +8,10 @@ const PrivacyPolicy = () => {
       <div>
         <h2 className="text-2xl font-semibold mb-4">Privacy Policy</h2>
         <p>
-          Privacy Policy for Rendovu Mobile App Last updated: [Date] Rendovu
-          (`&quot;`Rendovu`&quot;`, `&quot;`us`&quot;`, `&quot;`we`&quot;`, or
-          `&quot;`our`&quot;`) operates the Rendovu mobile application (the
-          `&quot;`App`&quot;`). This page informs you of our policies regarding
+          Privacy Policy for Rendovu Mobile App Last updated: 12/18/23 Rendovu (
+          &quot; Rendovu &quot; , &quot; us &quot; , &quot; we &quot; , or
+          &quot; our &quot; ) operates the Rendovu mobile application (the
+          &quot; App &quot; ). This page informs you of our policies regarding
           the collection, use, and disclosure of personal data when you use our
           App and the choices you have associated with that data. We use your
           data to provide and improve the App, connecting users with activities
@@ -34,21 +34,23 @@ const PrivacyPolicy = () => {
           <h3 className="text-xl font-semibold mb-2">
             Types of Data Collected
           </h3>
-          <h3>Personal Data </h3>
-          While using our App, we may ask you to provide us with certain
-          personally identifiable information to enhance your experience
-          (`&quot;`Personal Data`&quot;`). Personally identifiable information
-          may include, but is not limited to:
+          <h3 className="text-l font-semibold mb-2">Personal Data </h3>
+          <p>
+            While using our App, we may ask you to provide us with certain
+            personally identifiable information to enhance your experience (
+            &quot; Personal Data &quot; ). Personally identifiable information
+            may include, but is not limited to:
+          </p>
           <ul>
             <li>Email address</li>
             <li>Location data</li>
             <li>Interests and preferences</li>
             <li>User-generated content</li>
           </ul>
-          <h3>Usage Data</h3>
+          <h3 className="text-l font-semibold mb-2">Usage Data</h3>
           We may also collect information on how the App is accessed and used
-          (&quot;`Usage Data&quot;`). This Usage Data may include information
-          such as your device`&apos;`s Internet Protocol address (e.g., IP
+          (&quot; Usage Data&quot; ). This Usage Data may include information
+          such as your device &apos; s Internet Protocol address (e.g., IP
           address), device type, operating system, app version, the pages of our
           App that you visit, the time and date of your visit, and other
           diagnostic data.
@@ -57,29 +59,36 @@ const PrivacyPolicy = () => {
         <section className="mb-6">
           <h3 className="text-xl font-semibold mb-2">Use of Data</h3>
           {/* Add your content here */}
-          Rendovu uses the collected data for various purposes:
-          <ul>
-            <li>To provide and personalize the App experience</li>
-            <li>
-              To match users with activities based on their interests and
-              location
-            </li>
-            <li>
-              To notify users about events and updates related to their
-              interests and local communities
-            </li>
-            <li>
-              To facilitate communication between users with shared interests
-            </li>
-            <li>To gather insights for analysis and improvement of the App</li>
-            <li>To monitor the usage of the App</li>
-            <li>To detect, prevent, and address technical issues</li>
-          </ul>
+          <div>
+            Rendovu uses the collected data for various purposes:
+            <ul>
+              <li>To provide and personalize the App experience</li>
+              <li>
+                To match users with activities based on their interests and
+                location
+              </li>
+              <li>
+                To notify users about events and updates related to their
+                interests and local communities
+              </li>
+              <li>
+                To facilitate communication between users with shared interests
+              </li>
+              <li>
+                To gather insights for analysis and improvement of the App
+              </li>
+              <li>To monitor the usage of the App</li>
+              <li>To detect, prevent, and address technical issues</li>
+            </ul>
+          </div>
         </section>
+
         {/* Location Data */}
         <section className="mb-6">
           <h3 className="text-xl font-semibold mb-2">Location Data</h3>
-          <p>**Third-party Partners**</p>
+          <p>
+            <b>Third-party Partners</b>
+          </p>
           <p>
             Rendovu may collaborate with third-party partners to enhance the App
             experience. These partners may have access to your Personal Data
