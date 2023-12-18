@@ -8,9 +8,9 @@ const PrivacyPolicy = () => {
       <div>
         <h2 className="text-2xl font-semibold mb-4">Privacy Policy</h2>
         <p>
-          Privacy Policy for Rendovu Mobile App Last updated: 12/18/23 Rendovu (
-          &quot; Rendovu &quot; , &quot; us &quot; , &quot; we &quot; , or
-          &quot; our &quot; ) operates the Rendovu mobile application (the
+          Privacy Policy for Rondevu Mobile App Last updated: 12/18/23 Rondevu (
+          &quot; Rondevu &quot; , &quot; us &quot; , &quot; we &quot; , or
+          &quot; our &quot; ) operates the Rondevu mobile application (the
           &quot; App &quot; ). This page informs you of our policies regarding
           the collection, use, and disclosure of personal data when you use our
           App and the choices you have associated with that data. We use your
@@ -60,7 +60,7 @@ const PrivacyPolicy = () => {
           <h3 className="text-xl font-semibold mb-2">Use of Data</h3>
           {/* Add your content here */}
           <div>
-            Rendovu uses the collected data for various purposes:
+            Rondevu uses the collected data for various purposes:
             <ul>
               <li>To provide and personalize the App experience</li>
               <li>
@@ -90,7 +90,7 @@ const PrivacyPolicy = () => {
             <b>Third-party Partners</b>
           </p>
           <p>
-            Rendovu may collaborate with third-party partners to enhance the App
+            Rondevu may collaborate with third-party partners to enhance the App
             experience. These partners may have access to your Personal Data
             only to perform tasks on our behalf and are obligated not to
             disclose or use it for any other purpose.
@@ -115,7 +115,7 @@ const PrivacyPolicy = () => {
           <h3 className="text-xl font-semibold mb-2">
             Your Data Protection Rights
           </h3>
-          Rendovu aims to take reasonable steps to allow you to correct, amend,
+          Rondevu aims to take reasonable steps to allow you to correct, amend,
           delete, or limit the use of your Personal Data. Users can manage their
           privacy settings within the App or by Email.
         </section>
