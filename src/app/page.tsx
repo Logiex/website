@@ -7,6 +7,7 @@ import { FaDiscord, FaInstagram } from "react-icons/fa";
 export default function Home() {
   const [email, setEmail] = useState("");
   const [result, setResult] = useState<string>();
+  const [sending, setSending] = useState(false);
   const handleSubmit = (ev: any) => {
     ev.preventDefault();
     const serverURL = process.env.NEXT_PUBLIC_SERVER_URL;
@@ -21,8 +22,9 @@ export default function Home() {
         "Content-Type": "application/json",
       },
     }).then((val) => {
+      setSending(false);
       // console.log(val);
-
+      setResult(undefined);
       val.text().then((text) => {
         if (val.status !== 200) {
           setResult(`Failed, enter an email`);
@@ -31,6 +33,8 @@ export default function Home() {
         }
       });
     });
+    !sending && setResult("Sending email to server, it might take a while");
+    setSending(true);
   };
 
   return (
