@@ -70,7 +70,7 @@ export default function Home() {
             value={email}
             type="text"
             onChange={(e) => setEmail(e.target.value)}
-            className="flex-1 bg-black border-2 border-rose-500 font-mono px-4"
+            className="flex-1 bg-transparent border-2 border-rose-500 font-mono px-4"
           ></input>
           <input
             type="submit"
