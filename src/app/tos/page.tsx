@@ -66,6 +66,10 @@ const TermsOfService = () => {
             <li>
               Impersonate any person or entity or provide false information.
             </li>
+            <li>
+              Share nudity or graphic images in any form of pictures or other
+              media.
+            </li>
           </ul>
         </section>
 
