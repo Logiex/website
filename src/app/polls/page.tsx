@@ -30,8 +30,6 @@ const PollPage = () => {
     defaultValues: { poll: [{ value: "Michael" }, { value: "Bee" }] },
   });
 
- 
-
   const { fields, append } = useFieldArray({
     control: control,
     name: "poll",
@@ -43,7 +41,7 @@ const PollPage = () => {
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     setSubmitted(true);
     console.log(data);
-    append({value : "yo"})
+    append({ value: "yo" });
   };
   return (
     /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
@@ -82,28 +80,30 @@ const PollPage = () => {
               `}
                 >
                   <div>
-                      <label className="inline-block w-full h-full py-4 px-[10%] rounded-full">
-                        <input
-                          {...register(`poll` as const)}
-                          type="radio"
-                          value={val.value}
-                          className="appearance-none"
-                          disabled={submitted}
-                        />
-                        {val.value}
-                      </label>
+                    <label className="inline-block w-full h-full py-4 px-[10%] rounded-full">
+                      <input
+                        {...register(`poll` as const)}
+                        type="radio"
+                        value={val.value}
+                        className="appearance-none"
+                        disabled={submitted}
+                      />
+                      {val.value}
+                    </label>
                   </div>
                 </div>
               );
             })}
             <div className="flex justify-end px-4">
-            <input type="submit" disabled={submitted} className="border border-[#003049] text-[#003049] w-fit px-4 py-2" />
+              <input
+                type="submit"
+                disabled={submitted}
+                className="border border-[#003049] text-[#003049] w-fit px-4 py-2"
+              />
             </div>
           </div>
-
         </div>
       </form>
-      <div>Hello</div>
     </div>
   );
 };
