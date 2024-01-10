@@ -2,6 +2,12 @@
 import { Pridi } from "next/font/google";
 import { useState } from "react";
 import { useForm, useFieldArray, SubmitHandler } from "react-hook-form";
+import { gql, useMutation } from "@apollo/client";
+import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
+
 type FormInput = {
   title: string;
   options: { value: string }[];
@@ -9,32 +15,17 @@ type FormInput = {
 
 const pridi = Pridi({ subsets: ["latin"], weight: ["500"] });
 
-const AddOptionMiniForm = ({
-  handleSubmit,
-}: {
-  handleSubmit: (value: string) => void;
-}) => {
-  const [option, setOption] = useState<string>("");
-
-  return (
-    <div>
-      <input value={option} onChange={(val) => setOption(val.target.value)} />
-      <label>
-        Submit
-        <input
-          type="button"
-          onClick={() => {
-            handleSubmit(option);
-            setOption("");
-          }}
-        />
-      </label>
-    </div>
-  );
-};
-
 const optionsArray = ["Option1", "Option2", "Option3", "Option4", "Option5"];
 const initialSize = 2;
+
+const ADDPOLLMUTATION = gql`
+  mutation MyMutation($Options: [String!], $Title: String!) {
+    createPoll(pollInput: { options: $Options, title: $Title }) {
+      _id
+      options
+    }
+  }
+`;
 
 const CreatePoll = () => {
   const { control, register, handleSubmit } = useForm<FormInput>({
@@ -47,20 +38,14 @@ const CreatePoll = () => {
   });
   const [selected, setSelected] = useState(initialSize);
 
-  const { fields, append, remove, replace } = useFieldArray({
+  const { fields, remove, replace } = useFieldArray({
     name: "options",
     control: control,
   });
 
-  const OptionCollection = ({
-    val,
-    onClick,
-    index,
-  }: {
-    val: string;
-    onClick: () => void;
-    index: number;
-  }) => {
+  const [createPoll] = useMutation(ADDPOLLMUTATION);
+
+  const OptionCollection = ({ index }: { index: number }) => {
     return (
       <div className="py-4">
         <input
@@ -72,7 +57,41 @@ const CreatePoll = () => {
     );
   };
 
+  const { push } = useRouter();
+
+  const calculatePollRoute = () => {
+    return "/";
+  };
+
+  const RedirectToast = ({ onClick }: { onClick?: () => void }) => {
+    return (
+      <div className="flex flex-col" onClick={onClick}>
+        The Poll was created, click here to see it
+        <button>See poll</button>
+      </div>
+    );
+  };
   const onSubmit: SubmitHandler<FormInput> = (data) => {
+    const testing = false;
+    testing && toast(<RedirectToast />);
+    !testing &&
+      createPoll({
+        variables: {
+          Options: data.options.map((val) => val.value),
+          Title: data.title,
+        },
+      }).then((val) => {
+        if (!val.errors) {
+          toast(
+            <RedirectToast
+              onClick={() => {
+                push(calculatePollRoute());
+              }}
+            />
+          );
+        }
+      });
+
     console.log(data);
   };
 
@@ -105,10 +124,21 @@ const CreatePoll = () => {
     );
   };
 
-  const [options, setOptions] = useState(optionsArray);
-
   return (
     <div className={`${pridi.className} text-black p-[4%] px-[15%]`}>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+
       <div className="flex justify-center text-5xl py-2">
         <div>Poll Maker</div>
       </div>
@@ -126,7 +156,7 @@ const CreatePoll = () => {
             <div className="text-2xl pr-[10%]">Count</div>
             <PollButtons
               onSelectedChanged={(num) => {
-                const subarray = options.slice(0, num).map((option) => {
+                const subarray = optionsArray.slice(0, num).map((option) => {
                   return { value: option };
                 });
                 replace(subarray);
@@ -134,21 +164,17 @@ const CreatePoll = () => {
             />
           </div>
         </div>
-        {fields.map((val, index) => {
-          return (
-            <OptionCollection
-              val={val.value}
-              key={index}
-              index={index}
-              onClick={() => {
-                remove(index);
-              }}
-            />
-          );
+
+        {fields.map((_, index) => {
+          return <OptionCollection key={index} index={index} />;
         })}
-        
+
         <div className="flex justify-end text-2xl md:center ">
-          <input type="submit" value={"Submit Poll"} className="hover:cursor-pointer p-2 hover:outline-black hover:outline" />
+          <input
+            type="submit"
+            value={"Submit Poll"}
+            className="hover:cursor-pointer p-2 hover:outline-black hover:outline"
+          />
         </div>
       </form>
     </div>
