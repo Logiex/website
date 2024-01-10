@@ -62,9 +62,9 @@ const CreatePoll = () => {
     index: number;
   }) => {
     return (
-      <div>
+      <div className="py-4">
         <input
-          className="bg-transparent text-2xl p-4 rounded-md	border-[#F77F00] border-2 focus:outline-none 	focus:border-[#D62828]"
+          className="bg-transparent text-2xl p-4 rounded-md	border-[#F77F00] border-2 focus:outline-none 	focus:border-[#D62828] w-full"
           type="text"
           {...register(`options.${index}.value`)}
         />
@@ -108,7 +108,7 @@ const CreatePoll = () => {
   const [options, setOptions] = useState(optionsArray);
 
   return (
-    <div className={`${pridi.className} text-black p-[4%]`}>
+    <div className={`${pridi.className} text-black p-[4%] px-[15%]`}>
       <div className="flex justify-center text-5xl py-2">
         <div>Poll Maker</div>
       </div>
@@ -146,13 +146,10 @@ const CreatePoll = () => {
             />
           );
         })}
-        <AddOptionMiniForm
-          handleSubmit={(val) => {
-            // You want to add a "form option" here, using say append
-            append({ value: val });
-          }}
-        />
-        <input type="submit" value={"Submit Poll"} />
+        
+        <div className="flex justify-end text-2xl md:center ">
+          <input type="submit" value={"Submit Poll"} className="hover:cursor-pointer p-2 hover:outline-black hover:outline" />
+        </div>
       </form>
     </div>
   );
