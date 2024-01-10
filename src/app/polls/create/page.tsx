@@ -59,8 +59,8 @@ const CreatePoll = () => {
 
   const { push } = useRouter();
 
-  const calculatePollRoute = () => {
-    return "/";
+  const calculatePollRoute = (poll_id: string) => {
+    return `/polls/${poll_id}`;
   };
 
   const RedirectToast = ({ onClick }: { onClick?: () => void }) => {
@@ -82,10 +82,12 @@ const CreatePoll = () => {
         },
       }).then((val) => {
         if (!val.errors) {
+          const data = val.data;
+          const subpath = data.createPoll._id;
           toast(
             <RedirectToast
               onClick={() => {
-                push(calculatePollRoute());
+                push(calculatePollRoute(subpath));
               }}
             />
           );
