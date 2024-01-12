@@ -3,6 +3,7 @@ import { useForm, SubmitHandler, useFieldArray } from "react-hook-form";
 import { Pridi } from "next/font/google";
 import { useEffect, useState } from "react";
 import { gql, useMutation, useQuery } from "@apollo/client";
+import { toast } from "react-toastify";
 
 type Inputs = {
   poll: { value: string }[];
@@ -80,8 +81,8 @@ const PollPage = ({ params }: { params: { slug: string } }) => {
       if (!val.errors) {
         setSubmitted(true);
         console.log(val.data);
-        
       }
+      toast("Submitted");
     });
   };
 
@@ -138,12 +139,15 @@ const PollPage = ({ params }: { params: { slug: string } }) => {
                 </div>
               );
             })}
-            <div className="flex justify-end px-4">
-              <input
-                type="submit"
-                disabled={submitted}
-                className="border border-[#003049] text-[#003049] w-fit px-4 py-2"
-              />
+            <div className="flex justify-end">
+              <button className="hover:border hover:border-black px-4 text-[#003049]">Share</button>
+              <div className=" px-4">
+                <input
+                  type="submit"
+                  disabled={submitted}
+                  className="border border-[#003049] text-[#003049] w-fit px-4 py-2"
+                />
+              </div>
             </div>
           </div>
         </div>

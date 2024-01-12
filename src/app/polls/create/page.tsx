@@ -143,6 +143,7 @@ const CreatePoll = () => {
 
       <div className="flex justify-center text-5xl py-2">
         <div>Poll Maker</div>
+       
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex-col flex">
