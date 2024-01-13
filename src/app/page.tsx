@@ -1,5 +1,5 @@
 "use client";
-import { log } from "console";
+import { UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 import { useState } from "react";
 import { FaDiscord, FaInstagram } from "react-icons/fa";
@@ -77,6 +77,7 @@ export default function Home() {
             type="submit"
             className="self-end mx-4 my-2 border-2 border-transparent hover:border-rose-500 p-1"
           />
+          <UserButton/>
         </form>
         {result && <p>{result}</p>}
       </div>
