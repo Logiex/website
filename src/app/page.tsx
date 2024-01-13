@@ -1,6 +1,5 @@
 "use client";
 import { UserButton } from "@clerk/nextjs";
-import { log } from "console";
 import Image from "next/image";
 import { useState } from "react";
 import { FaDiscord, FaInstagram } from "react-icons/fa";
