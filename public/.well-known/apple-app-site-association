@@ -3,15 +3,15 @@
     "apps": ["logx.rondevu.app"],
     "details": [
       {
-        "appID": "{APPLE_TEAM_ID}.{BUNDLE_ID}",
+        "appID": "F7Z38N8R3C.com.logx.rondevu",
         "paths": ["/records/*"]
       }
     ]
   },
   "activitycontinuation": {
-    "apps": ["{APPLE_TEAM_ID}.{BUNDLE_ID}"]
+    "apps": ["F7Z38N8R3C.com.logx.rondevu"]
   },
   "webcredentials": {
-    "apps": ["{APPLE_TEAM_ID}.{BUNDLE_ID}"]
+    "apps": ["F7Z38N8R3C.com.logx.rondevu"]
   }
 }
