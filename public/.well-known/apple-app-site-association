@@ -4,7 +4,7 @@
     "details": [
       {
         "appID": "F7Z38N8R3C.com.logx.rondevu",
-        "paths": ["/records/*"]
+        "paths": ["/rondevu/*"]
       }
     ]
   },
