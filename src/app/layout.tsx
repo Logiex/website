@@ -20,6 +20,9 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
+        <head>
+        <meta name="apple-itunes-app" content="app-id=6474651875" />
+        </head>
         <body className={`${inter.className} dark `}>
           <ApolloWrapper>{children}</ApolloWrapper>
         </body>
