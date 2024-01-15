@@ -1,0 +1,17 @@
+{
+  "applinks": {
+    "apps": ["logx.rondevu.app"],
+    "details": [
+      {
+        "appID": "F7Z38N8R3C.com.logx.rondevu",
+        "paths": ["/rondevu/*"]
+      }
+    ]
+  },
+  "activitycontinuation": {
+    "apps": ["F7Z38N8R3C.com.logx.rondevu"]
+  },
+  "webcredentials": {
+    "apps": ["F7Z38N8R3C.com.logx.rondevu"]
+  }
+}

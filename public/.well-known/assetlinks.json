@@ -1,0 +1,13 @@
+[
+    {
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.logx.rondevu",
+        "sha256_cert_fingerprints": [
+          "29:EF:E2:2D:E5:00:DD:B5:0D:39:DC:52:75:AA:EE:1D:85:F7:19:AB:AF:86:3A:72:FB:6A:CB:A3:27:F5:73:55"
+        ]
+      }
+    }
+  ]
+  
