@@ -7,9 +7,7 @@
         "namespace": "android_app",
         "package_name": "com.logx.rondevu",
         "sha256_cert_fingerprints": [
-          "29:EF:E2:2D:E5:00:DD:B5:0D:39:DC:52:75:AA:EE:1D:85:F7:19:AB:AF:86:3A:72:FB:6A:CB:A3:27:F5:73:55",
-          "84:17:A6:C1:C4:4D:00:F4:94:20:FE:9A:8E:3B:EA:1D:2B:79:FF:70:70:61:D4:ED:7A:B7:D9:F1:8E:1F:7F:03",
-          "CC:4E:D0:49:F4:1D:BC:00:5E:21:38:69:C4:D0:EA:36:AE:94:44:FD:8B:20:FE:C4:B4:51:49:F8:04:34:59:CA"
+          "29:EF:E2:2D:E5:00:DD:B5:0D:39:DC:52:75:AA:EE:1D:85:F7:19:AB:AF:86:3A:72:FB:6A:CB:A3:27:F5:73:55"
         ]
       }
     }
