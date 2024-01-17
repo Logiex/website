@@ -3,7 +3,7 @@ import { useForm, SubmitHandler, useFieldArray } from "react-hook-form";
 import { Pridi } from "next/font/google";
 import { useEffect, useState } from "react";
 import { gql, useMutation, useQuery } from "@apollo/client";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 
 type Inputs = {
   poll: { value: string }[];
@@ -82,8 +82,8 @@ const PollPage = ({ params }: { params: { slug: string } }) => {
         setSubmitted(true);
         console.log(val.data);
       }
-      toast("Submitted");
     });
+    // toast(<div className="flex flex-col">Submitted</div>);
   };
 
   return (
@@ -91,6 +91,18 @@ const PollPage = ({ params }: { params: { slug: string } }) => {
     <div
       className={`flex min-h-screen flex-col justify-stretch ${pridi.className}`}
     >
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex-1 flex flex-col items-center"
@@ -111,8 +123,8 @@ const PollPage = ({ params }: { params: { slug: string } }) => {
         >
           <div className="flex flex-col">
             {fields.map((val, index) => {
-              console.log(val);
-              console.log(touchedFields.poll);
+              // console.log(val);
+              // console.log(touchedFields.poll);
 
               return (
                 <div
@@ -140,12 +152,19 @@ const PollPage = ({ params }: { params: { slug: string } }) => {
               );
             })}
             <div className="flex justify-end">
-              <button className="hover:border hover:border-black px-4 text-[#003049]">Share</button>
-              <div className=" px-4">
+              <button
+                className="hover:border hover:border-black px-4 text-[#003049]"
+                onClick={() => {
+                  // console.log("hello");
+                }}
+              >
+                Share
+              </button>
+              <div className=" px-4 ">
                 <input
                   type="submit"
                   disabled={submitted}
-                  className="border border-[#003049] text-[#003049] w-fit px-4 py-2"
+                  className={`hover:border border-[#003049] text-[#003049] w-fit px-4 py-2 `}
                 />
               </div>
             </div>

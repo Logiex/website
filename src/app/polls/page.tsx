@@ -7,6 +7,7 @@ import {
 } from "react-hook-form";
 import { Pridi } from "next/font/google";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 type Inputs = {
   example: string;
@@ -40,8 +41,7 @@ const PollPage = () => {
   const [submitted, setSubmitted] = useState(false);
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     setSubmitted(true);
-    console.log(data);
-    append({ value: "yo" });
+    toast("Your Answer has been submitted");
   };
   return (
     /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
