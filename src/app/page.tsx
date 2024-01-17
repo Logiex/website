@@ -65,7 +65,7 @@ export default function Home() {
         </form>
         {result && <p>{result}</p>}
       </div>
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm flex ">
+      <div className="z-10 max-w-5xl w-full items-center justify-around font-mono text-sm flex w-screen">
         <div>
           <p>
             <a href="/privacy" target="_blank">
