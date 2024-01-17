@@ -25,17 +25,18 @@ export async function getToken() {
 async function sendRefreshToken() {
   const refresh_token = localStorage.getItem(refreshTokenLoc);
   if (refresh_token) {
-    
     const data = (
       await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL!}/auth/refresh`, {
         refresh_token: refresh_token,
       })
     ).data;
-    
-    localStorage.setItem(accessTokenLoc, data.access_token)
-    
-    return data.access_token as string;
 
+    if (data.refresh_token) {
+      localStorage.setItem(refreshTokenLoc, data.refresh_token);
+    }
+    localStorage.setItem(accessTokenLoc, data.access_token);
+
+    return data.access_token as string;
   } else {
     throw new Error("Something is wrong");
   }
