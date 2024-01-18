@@ -96,7 +96,7 @@ export default function Rondevu({ params }: { params: { slug: string } }) {
     </div>
   );
   return data ? (
-    <div className={`p-64 text-black ${pridi.className}`}>
+    <div className={`flex flex-col sm:p-24 sm:p-4 py-48 lg:p-64 lg:my-0 items-center lg:items-start  text-black ${pridi.className}`}>
       <ProfileAndName
         name={activity.creator.displayName}
         profilepic={activity.creator.pictureLink}
@@ -108,7 +108,7 @@ export default function Rondevu({ params }: { params: { slug: string } }) {
         )} - ${parseDate(activity.endTime)}`}</div>
         <div className={`text-xl	`}>{activity.description}</div>
       </div>
-      <div className="flex">
+      <div className="flex lg:w-full">
         <Tags tags={activity.tags} />
         <InteractionActions />
       </div>
