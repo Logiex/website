@@ -108,8 +108,8 @@ const CreatePoll = () => {
       <div className="flex">
         {arr.map((val, index) => (
           <div
-            className={`px-2 text-2xl mx-2 border rounded-md hover:border-black 
-          ${selected == val ? "border-black" : "border-transparents"}
+            className={`px-2 text-2xl mx-2 border rounded-md hover:border-black hover:cursor-pointer 
+          ${selected == val ? "border-black" : "border-transparent"}
           `}
             key={index}
             onClick={() => {
