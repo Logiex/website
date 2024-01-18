@@ -30,10 +30,15 @@ async function sendRefreshToken() {
         refresh_token: refresh_token,
       })
     ).data;
-
+    console.log(data.data);
+    
     if (data.refresh_token) {
+      console.log("setting refresh token");
+      
       localStorage.setItem(refreshTokenLoc, data.refresh_token);
     }
+
+    console.log("setting access token");
     localStorage.setItem(accessTokenLoc, data.access_token);
 
     return data.access_token as string;

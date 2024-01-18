@@ -46,7 +46,7 @@ function makeClient() {
               refreshToken()
                 .then((accessToken) => {
                   // Store the new tokens for your auth link
-
+                  
                   return accessToken;
                 })
                 .catch((error) => {

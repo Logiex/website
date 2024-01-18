@@ -4,6 +4,12 @@ import { Pridi } from "next/font/google";
 import { useEffect, useState } from "react";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { ToastContainer, toast } from "react-toastify";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import ShareButton from "@/components/adjusted/share-button";
 
 type Inputs = {
   poll: { value: string }[];
@@ -12,11 +18,15 @@ type Inputs = {
 // const forbiddenVal = "dijsjsdijisisiijdsijjiijdsijsjisijsijdisdjisjdisjsjisdijijsijdjsjisijdsijdsijsdijdijsijdsdijsisddijdsijsdjisdijdssijsjidijdsij"
 // #TODO test the forbidden value on a poll val
 const GETPOLLQUERY = gql`
-  query MyQuery($id: PydanticObjectId!) {
+  query MyQuery($id: PydanticObjectId!, $pollid: PydanticObjectId!) {
     getPoll(id: $id) {
       _id
       options
       title
+    }
+    getPollResponse(pollId: $pollid) {
+      _id
+      choice
     }
   }
 `;
@@ -33,9 +43,10 @@ const RESPONDTOPOLL = gql`
 const pridi = Pridi({ subsets: ["latin"], weight: ["500"] });
 const PollPage = ({ params }: { params: { slug: string } }) => {
   const poll_id = params.slug;
-  const { data, loading } = useQuery(GETPOLLQUERY, {
+  const { data, loading, error } = useQuery(GETPOLLQUERY, {
     variables: {
       id: poll_id,
+      pollid: poll_id,
     },
   });
 
@@ -51,6 +62,9 @@ const PollPage = ({ params }: { params: { slug: string } }) => {
     },
   });
 
+  // const response = !error && data ? data.getPollResponse : undefined;
+  console.log(error?.graphQLErrors);
+  
   const { fields, append, replace } = useFieldArray({
     control: control,
     name: "poll",
@@ -89,7 +103,7 @@ const PollPage = ({ params }: { params: { slug: string } }) => {
   return (
     /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
     <div
-      className={`flex min-h-screen flex-col justify-stretch ${pridi.className}`}
+      className={`flex min-h-screen flex-col justify-stretch text-black dark ${pridi.className}`}
     >
       <ToastContainer
         position="top-right"
@@ -152,14 +166,9 @@ const PollPage = ({ params }: { params: { slug: string } }) => {
               );
             })}
             <div className="flex justify-end">
-              <button
-                className="hover:border hover:border-black px-4 text-[#003049]"
-                onClick={() => {
-                  // console.log("hello");
-                }}
-              >
-                Share
-              </button>
+              <div className="hover:border hover:border-black px-4 text-[#003049]">
+                <ShareButton>Share</ShareButton>
+              </div>
               <div className=" px-4 ">
                 <input
                   type="submit"
