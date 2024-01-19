@@ -24,7 +24,6 @@ export default function Home() {
       },
     }).then((val) => {
       setSending(false);
-      // console.log(val);
       setResult(undefined);
       val.text().then((text) => {
         if (val.status !== 200) {
