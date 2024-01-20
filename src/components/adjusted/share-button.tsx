@@ -3,15 +3,15 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { copyLink } from "@/lib/utils";
 import { ReactNode } from "react";
 
 const ShareButton = ({ children }: { children: ReactNode }) => (
   <Popover
     onOpenChange={(val) => {
       //   val == true &&
-      val == true && navigator.clipboard.writeText(window.location.href);
+      val == true && copyLink();
     }}
-    
   >
     <PopoverTrigger className="p-2">{children}</PopoverTrigger>
     <PopoverContent>Link Copied to clickboard</PopoverContent>

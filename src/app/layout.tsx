@@ -4,6 +4,7 @@ import "./globals.css";
 
 import { ApolloWrapper } from "../lib/apolloprovider";
 import { ClerkProvider } from "@clerk/nextjs";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,6 +22,7 @@ export default function RootLayout({
         </head>
         <body className={`${inter.className} dark `}>
           <ApolloWrapper>{children}</ApolloWrapper>
+          <Toaster/>
         </body>
       </html>
     </ClerkProvider>
