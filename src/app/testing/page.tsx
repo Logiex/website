@@ -39,7 +39,7 @@ const PilledButton = ({
 export default function Page() {
   return <>Nope</>;
 }
-export function RondevuResults({
+function RondevuResults({
   votes,
   options,
   title,
