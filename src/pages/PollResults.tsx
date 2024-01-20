@@ -16,12 +16,16 @@ export default function PollResult({
   title,
   friends,
   loading,
+  poll_id,
+  referrer,
 }: {
   votes?: number;
   options?: { name: string; results: number }[];
   title?: number;
   friends?: { name: string; choice: string }[];
   loading?: boolean;
+  poll_id: string;
+  referrer?: string;
 }) {
   return (
     <div className={`pt-8 flex flex-col items-center pl-2 ${dongle.className}`}>
@@ -37,7 +41,10 @@ export default function PollResult({
                 className="absolute right-[5%] top-[5%]  hover:cursor-pointer text-3xl outline outline-2 z-10 p-1 px-2"
                 onClick={() => {
                   toast("Link copied to clipboard");
-                  copyLink();
+                  copyLink({
+                    subpath: `/polls/${poll_id}`,
+                    query: referrer ? `referrer=${referrer}` : undefined,
+                  });
                 }}
               >
                 Share

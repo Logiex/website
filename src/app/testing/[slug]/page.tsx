@@ -14,6 +14,7 @@ const GETPOLLQUERY = gql`
       }
     }
     pollUser {
+      _id
       displayName
     }
   }
@@ -63,11 +64,21 @@ const parseResults = (
   });
   return { graph: res, total: total };
 };
-const parseDisplayName = (data: any) => {
+const parsePollUser = (
+  data: any
+):
+  | {
+      displayName?: string;
+      id?: string;
+    }
+  | undefined => {
   if (!data) {
     return undefined;
   }
-  return data.pollUser.displayName;
+
+  console.log(data.pollUser?._id);
+
+  return { displayName: data.pollUser?.displayName, id: data.pollUser?._id };
 };
 
 const SubmitDisplayName = ({
@@ -113,14 +124,12 @@ const SubmitDisplayName = ({
               <input type="submit" className="py-4 hover:cursor-pointer " />
             </div>
           </form>
-
         </CardContent>
-
       </Card>
-
     </div>
   );
 };
+
 export default function Testing({ params }: { params: { slug: string } }) {
   const id = params.slug;
   const { data, loading, refetch, client } = useQuery(GETPOLLQUERY, {
@@ -129,7 +138,7 @@ export default function Testing({ params }: { params: { slug: string } }) {
     },
   });
   const result = parseResults(data);
-  const displayName = parseDisplayName(data);
+  const user = parsePollUser(data);
 
   return (
     <div>
@@ -138,13 +147,16 @@ export default function Testing({ params }: { params: { slug: string } }) {
           options={result?.graph}
           votes={result?.total}
           loading={loading}
+          poll_id={id}
         />
       )}
-      {!loading && data && displayName ? (
+      {!loading && data && user?.displayName ? (
         <PollResult
           options={result?.graph}
           votes={result?.total}
           loading={loading}
+          poll_id={id}
+          referrer={user?.id}
         />
       ) : (
         <SubmitDisplayName
