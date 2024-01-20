@@ -3,6 +3,8 @@ import { CreateRondevuButton } from "@/components/buttons/send-plane";
 import { SubscribeButton } from "@/components/buttons/subscribe";
 import { ReactNode, useState } from "react";
 import { Dongle } from "next/font/google";
+import { toast } from "sonner";
+import { copyLink } from "@/lib/utils";
 const dongle = Dongle({ subsets: ["latin"], weight: ["400"] });
 const PilledButton = ({
   children,
@@ -49,9 +51,16 @@ export default function RondevuResults({
     <div className={`pt-8 flex flex-col items-center pl-2 ${dongle.className}`}>
       <div className=" w-[70%] bg-white relative bg-black rounded-3xl">
         <div className="relative bottom-2 right-2 w-full rounded-3xl h-full bg-white p-4">
-          <div className="absolute right-[5%] top-[5%]  hover:cursor-pointer text-3xl outline outline-2 z-10 p-1 px-2">
+          <div
+            className="absolute right-[5%] top-[5%]  hover:cursor-pointer text-3xl outline outline-2 z-10 p-1 px-2"
+            onClick={() => {
+              toast("Link copied to clipboard");
+              copyLink();
+            }}
+          >
             Share
           </div>
+
           <div className="absolute text-xl -left-8 bg-white rounded-full outline p-2 outline-2 outline-black">
             {votes ?? 24} votes
           </div>
