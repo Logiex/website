@@ -21,12 +21,17 @@ type Inputs = {
 // const forbiddenVal = "dijsjsdijisisiijdsijjiijdsijsjisijsijdisdjisjdisjsjisdijijsijdjsjisijdsijdsijsdijdijsijdsdijsisddijdsijsdjisdijdssijsjidijdsij"
 // #TODO test the forbidden value on a poll val
 const GETPOLLQUERY = gql`
-  query MyQuery($id: PydanticObjectId!, $pollid: PydanticObjectId!) {
+  query MyQuery($id: PydanticObjectId!) {
     getPoll(id: $id) {
       _id
       options
       title
     }
+  }
+`;
+
+const GETPOLLRESPONSE = gql`
+  query MyQuery($pollid: PydanticObjectId!) {
     getPollResponse(pollId: $pollid) {
       _id
       choice
@@ -37,7 +42,7 @@ const RESPONDTOPOLL = gql`
   mutation MyMutation(
     $PollID: PydanticObjectId!
     $Choice: String!
-    $Referrer: String
+    $Referrer: PydanticObjectId
   ) {
     answerPoll(
       pollResponse: { pollId: $PollID, choice: $Choice, referrer: $Referrer }
@@ -60,9 +65,14 @@ const PollPage = ({ params }: { params: { slug: string } }) => {
   const { data, loading, error } = useQuery(GETPOLLQUERY, {
     variables: {
       id: poll_id,
+    },
+  });
+  const { data: pollresponse } = useQuery(GETPOLLRESPONSE, {
+    variables: {
       pollid: poll_id,
     },
   });
+
   const {
     register,
     handleSubmit,
@@ -74,8 +84,9 @@ const PollPage = ({ params }: { params: { slug: string } }) => {
       poll: [{ value: "First" }, { value: "Second" }, { value: "Third" }],
     },
   });
+  console.log(data);
 
-  const responded = data ? !!data.getPollResponse : false;
+  const responded = pollresponse ? !!pollresponse.getPollResponse : false;
 
   const { fields, replace } = useFieldArray({
     control: control,
@@ -130,7 +141,7 @@ const PollPage = ({ params }: { params: { slug: string } }) => {
         theme="light"
       />
       <Dialog
-        open={responded}
+        open={responded || submitted}
         onOpenChange={() => {
           push("/polls/create");
         }}
@@ -144,7 +155,7 @@ const PollPage = ({ params }: { params: { slug: string } }) => {
             </DialogDescription>
             <button
               onClick={() => {
-                push("/polls/response");
+                push(`/testing/${poll_id}`);
               }}
             >
               See Responses
