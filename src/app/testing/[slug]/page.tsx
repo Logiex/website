@@ -17,6 +17,14 @@ const GETPOLLQUERY = gql`
       _id
       displayName
     }
+    pollFriendsResponses(pollId: $ID) {
+      data {
+        choice
+        user {
+          displayName
+        }
+      }
+    }
   }
 `;
 
@@ -139,7 +147,18 @@ export default function Testing({ params }: { params: { slug: string } }) {
   });
   const result = parseResults(data);
   const user = parsePollUser(data);
+  const friends = data?.pollFriendsResponses;
+  const buds: { choice: string; user: { displayName: string } }[] = friends
+    ? friends.data
+    : [];
 
+  const friends_input: {
+    name: string;
+    choice: string;
+  }[] = buds.map((bud, val) => {
+    return { name: bud.user.displayName, choice: bud.choice };
+  });
+  
   return (
     <div>
       {loading && (
@@ -157,15 +176,10 @@ export default function Testing({ params }: { params: { slug: string } }) {
           loading={loading}
           poll_id={id}
           referrer={user?.id}
+          friends={friends_input}
         />
       ) : (
-        <SubmitDisplayName
-          onUsernameSubmitted={() => {
-            // refetch({ ID: id });
-
-            console.log("yess");
-          }}
-        />
+        <SubmitDisplayName onUsernameSubmitted={() => {}} />
       )}
     </div>
   );
