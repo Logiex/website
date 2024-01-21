@@ -3,14 +3,14 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { copyLink } from "@/lib/utils";
+import { copyHref } from "@/lib/utils";
 import { ReactNode } from "react";
 
 const ShareButton = ({ children }: { children: ReactNode }) => (
   <Popover
     onOpenChange={(val) => {
       //   val == true &&
-      val == true && copyLink();
+      val == true && copyHref();
     }}
   >
     <PopoverTrigger className="p-2">{children}</PopoverTrigger>

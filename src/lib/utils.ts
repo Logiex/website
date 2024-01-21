@@ -16,3 +16,7 @@ export function copyLink({
   const q = query ? `?${query}` : "" 
   navigator.clipboard.writeText(`${window.location.origin}/${sp}${q}`);
 }
+
+export function copyHref(){
+  navigator.clipboard.writeText(window.location.href);
+}
