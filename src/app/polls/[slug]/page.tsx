@@ -61,8 +61,7 @@ const PollPage = ({ params }: { params: { slug: string } }) => {
   const searchParams = useSearchParams();
 
   const referrer = searchParams?.get("referrer");
-
-  const { data, loading, error } = useQuery(GETPOLLQUERY, {
+  const { data, loading } = useQuery(GETPOLLQUERY, {
     variables: {
       id: poll_id,
     },

@@ -140,7 +140,7 @@ const SubmitDisplayName = ({
 
 export default function Testing({ params }: { params: { slug: string } }) {
   const id = params.slug;
-  const { data, loading, refetch, client } = useQuery(GETPOLLQUERY, {
+  const { data, loading, } = useQuery(GETPOLLQUERY, {
     variables: {
       ID: id,
     },
