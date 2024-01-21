@@ -14,7 +14,16 @@ const GETPOLLQUERY = gql`
       }
     }
     pollUser {
+      _id
       displayName
+    }
+    pollFriendsResponses(pollId: $ID) {
+      data {
+        choice
+        user {
+          displayName
+        }
+      }
     }
   }
 `;
@@ -63,11 +72,21 @@ const parseResults = (
   });
   return { graph: res, total: total };
 };
-const parseDisplayName = (data: any) => {
+const parsePollUser = (
+  data: any
+):
+  | {
+      displayName?: string;
+      id?: string;
+    }
+  | undefined => {
   if (!data) {
     return undefined;
   }
-  return data.pollUser.displayName;
+
+  console.log(data.pollUser?._id);
+
+  return { displayName: data.pollUser?.displayName, id: data.pollUser?._id };
 };
 
 const SubmitDisplayName = ({
@@ -113,24 +132,33 @@ const SubmitDisplayName = ({
               <input type="submit" className="py-4 hover:cursor-pointer " />
             </div>
           </form>
-
         </CardContent>
-
       </Card>
-
     </div>
   );
 };
+
 export default function Testing({ params }: { params: { slug: string } }) {
   const id = params.slug;
-  const { data, loading, refetch, client } = useQuery(GETPOLLQUERY, {
+  const { data, loading, } = useQuery(GETPOLLQUERY, {
     variables: {
       ID: id,
     },
   });
   const result = parseResults(data);
-  const displayName = parseDisplayName(data);
+  const user = parsePollUser(data);
+  const friends = data?.pollFriendsResponses;
+  const buds: { choice: string; user: { displayName: string } }[] = friends
+    ? friends.data
+    : [];
 
+  const friends_input: {
+    name: string;
+    choice: string;
+  }[] = buds.map((bud, val) => {
+    return { name: bud.user.displayName, choice: bud.choice };
+  });
+  
   return (
     <div>
       {loading && (
@@ -138,22 +166,20 @@ export default function Testing({ params }: { params: { slug: string } }) {
           options={result?.graph}
           votes={result?.total}
           loading={loading}
+          poll_id={id}
         />
       )}
-      {!loading && data && displayName ? (
+      {!loading && data && user?.displayName ? (
         <PollResult
           options={result?.graph}
           votes={result?.total}
           loading={loading}
+          poll_id={id}
+          referrer={user?.id}
+          friends={friends_input}
         />
       ) : (
-        <SubmitDisplayName
-          onUsernameSubmitted={() => {
-            // refetch({ ID: id });
-
-            console.log("yess");
-          }}
-        />
+        <SubmitDisplayName onUsernameSubmitted={() => {}} />
       )}
     </div>
   );

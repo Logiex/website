@@ -3,13 +3,16 @@ import { useForm, SubmitHandler, useFieldArray } from "react-hook-form";
 import { Pridi } from "next/font/google";
 import { useEffect, useState } from "react";
 import { gql, useMutation, useQuery } from "@apollo/client";
-import { ToastContainer, toast } from "react-toastify";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { ToastContainer } from "react-toastify";
 import ShareButton from "@/components/adjusted/share-button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { useRouter, useSearchParams } from "next/navigation";
 
 type Inputs = {
   poll: { value: string }[];
@@ -18,22 +21,32 @@ type Inputs = {
 // const forbiddenVal = "dijsjsdijisisiijdsijjiijdsijsjisijsijdisdjisjdisjsjisdijijsijdjsjisijdsijdsijsdijdijsijdsdijsisddijdsijsdjisdijdssijsjidijdsij"
 // #TODO test the forbidden value on a poll val
 const GETPOLLQUERY = gql`
-  query MyQuery($id: PydanticObjectId!, $pollid: PydanticObjectId!) {
+  query MyQuery($id: PydanticObjectId!) {
     getPoll(id: $id) {
       _id
       options
       title
     }
+  }
+`;
+
+const GETPOLLRESPONSE = gql`
+  query MyQuery($pollid: PydanticObjectId!) {
     getPollResponse(pollId: $pollid) {
       _id
       choice
     }
   }
 `;
-// const RESPONDTOPOLL = gql``;
 const RESPONDTOPOLL = gql`
-  mutation MyMutation($PollID: PydanticObjectId!, $Choice: String!) {
-    answerPoll(pollResponse: { pollId: $PollID, choice: $Choice }) {
+  mutation MyMutation(
+    $PollID: PydanticObjectId!
+    $Choice: String!
+    $Referrer: PydanticObjectId
+  ) {
+    answerPoll(
+      pollResponse: { pollId: $PollID, choice: $Choice, referrer: $Referrer }
+    ) {
       _id
       choice
     }
@@ -41,11 +54,20 @@ const RESPONDTOPOLL = gql`
 `;
 
 const pridi = Pridi({ subsets: ["latin"], weight: ["500"] });
+
 const PollPage = ({ params }: { params: { slug: string } }) => {
   const poll_id = params.slug;
-  const { data, loading, error } = useQuery(GETPOLLQUERY, {
+  const { push } = useRouter();
+  const searchParams = useSearchParams();
+
+  const referrer = searchParams?.get("referrer");
+  const { data, loading } = useQuery(GETPOLLQUERY, {
     variables: {
       id: poll_id,
+    },
+  });
+  const { data: pollresponse } = useQuery(GETPOLLRESPONSE, {
+    variables: {
       pollid: poll_id,
     },
   });
@@ -61,11 +83,11 @@ const PollPage = ({ params }: { params: { slug: string } }) => {
       poll: [{ value: "First" }, { value: "Second" }, { value: "Third" }],
     },
   });
+  console.log(data);
 
-  // const response = !error && data ? data.getPollResponse : undefined;
-  console.log(error?.graphQLErrors);
-  
-  const { fields, append, replace } = useFieldArray({
+  const responded = pollresponse ? !!pollresponse.getPollResponse : false;
+
+  const { fields, replace } = useFieldArray({
     control: control,
     name: "poll",
   });
@@ -90,6 +112,7 @@ const PollPage = ({ params }: { params: { slug: string } }) => {
       variables: {
         PollID: poll_id,
         Choice: data.poll,
+        Referrer: referrer,
       },
     }).then((val) => {
       if (!val.errors) {
@@ -97,7 +120,6 @@ const PollPage = ({ params }: { params: { slug: string } }) => {
         console.log(val.data);
       }
     });
-    // toast(<div className="flex flex-col">Submitted</div>);
   };
 
   return (
@@ -117,29 +139,43 @@ const PollPage = ({ params }: { params: { slug: string } }) => {
         pauseOnHover
         theme="light"
       />
+      <Dialog
+        open={responded || submitted}
+        onOpenChange={() => {
+          push("/polls/create");
+        }}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>You have already responded to this poll</DialogTitle>
+            <DialogDescription>
+              Due to the fact that you have responded to this poll, you can not
+              respond anymore.
+            </DialogDescription>
+            <button
+              onClick={() => {
+                push(`/testing/${poll_id}`);
+              }}
+            >
+              See Responses
+            </button>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
+
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex-1 flex flex-col items-center"
-        // className="flex flex-col flex-[0.8] h-dvh	py-16 "
       >
         {/* register your input into the hook by invoking the "register" function */}
-        <div
-          // className="flex flex-[0.25] justify-center"
-          className="flex-[0.5] min-w-[60%] md:min-w-[75%] flex justify-center items-center"
-        >
+        <div className="flex-[0.5] min-w-[60%] md:min-w-[75%] flex justify-center items-center">
           <label className="text-5xl text-[#003049]">
             {data ? data.getPoll.title : "Donuts or Bagels"}
           </label>
         </div>
-        <div
-          className="flex flex-col min-w-[75%] flex-[0.75] "
-          // className="flex flex-[0.75] flex-col "
-        >
+        <div className="flex flex-col min-w-[75%] flex-[0.75] ">
           <div className="flex flex-col">
             {fields.map((val, index) => {
-              // console.log(val);
-              // console.log(touchedFields.poll);
-
               return (
                 <div
                   key={index}
@@ -157,7 +193,7 @@ const PollPage = ({ params }: { params: { slug: string } }) => {
                         type="radio"
                         value={val.value}
                         className="appearance-none"
-                        disabled={submitted}
+                        disabled={submitted || responded}
                       />
                       {val.value}
                     </label>
@@ -172,7 +208,7 @@ const PollPage = ({ params }: { params: { slug: string } }) => {
               <div className=" px-4 ">
                 <input
                   type="submit"
-                  disabled={submitted}
+                  disabled={submitted || responded}
                   className={`hover:border border-[#003049] text-[#003049] w-fit px-4 py-2 `}
                 />
               </div>
