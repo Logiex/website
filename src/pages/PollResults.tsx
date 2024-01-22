@@ -21,7 +21,7 @@ export default function PollResult({
 }: {
   votes?: number;
   options?: { name: string; results: number }[];
-  title?: number;
+  title?: string;
   friends?: { name: string; choice: string }[];
   loading?: boolean;
   poll_id: string;
