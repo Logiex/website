@@ -1,6 +1,6 @@
 "use client";
 import { useForm, SubmitHandler, useFieldArray } from "react-hook-form";
-import { Pridi } from "next/font/google";
+import { Dongle, Pridi } from "next/font/google";
 import { useEffect, useState } from "react";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { ToastContainer } from "react-toastify";
@@ -13,6 +13,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { useRouter, useSearchParams } from "next/navigation";
+import PollBackground from "@/pages/PollBackground";
 
 type Inputs = {
   poll: { value: string }[];
@@ -26,6 +27,9 @@ const GETPOLLQUERY = gql`
       _id
       options
       title
+    }
+    pollUser {
+      _id
     }
   }
 `;
@@ -54,7 +58,7 @@ const RESPONDTOPOLL = gql`
 `;
 
 const pridi = Pridi({ subsets: ["latin"], weight: ["500"] });
-
+const dongle = Dongle({ subsets: ["latin"], weight: ["400"] });
 const PollPage = ({ params }: { params: { slug: string } }) => {
   const poll_id = params.slug;
   const { push } = useRouter();
@@ -104,7 +108,6 @@ const PollPage = ({ params }: { params: { slug: string } }) => {
   }, [loading, data, replace]);
 
   const [SendPollResponse] = useMutation(RESPONDTOPOLL);
-
   const pollVal: string = watch("poll") as unknown as string;
   const [submitted, setSubmitted] = useState(false);
   const onSubmit: SubmitHandler<Inputs> = (data) => {
@@ -124,9 +127,8 @@ const PollPage = ({ params }: { params: { slug: string } }) => {
 
   return (
     /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
-    <div
-      className={`flex min-h-screen flex-col justify-stretch text-black dark ${pridi.className}`}
-    >
+
+    <PollBackground font_class={dongle.className}>
       <ToastContainer
         position="top-right"
         autoClose={5000}
@@ -173,7 +175,7 @@ const PollPage = ({ params }: { params: { slug: string } }) => {
             {data ? data.getPoll.title : "Donuts or Bagels"}
           </label>
         </div>
-        <div className="flex flex-col min-w-[75%] flex-[0.75] ">
+        <div className="flex flex-col lg:min-w-[50%] min-w-[75%] flex-[0.75] ">
           <div className="flex flex-col">
             {fields.map((val, index) => {
               return (
@@ -203,7 +205,9 @@ const PollPage = ({ params }: { params: { slug: string } }) => {
             })}
             <div className="flex justify-end">
               <div className="hover:border hover:border-black px-4 text-[#003049]">
-                <ShareButton>Share</ShareButton>
+                <ShareButton referrer={data?.pollUser?._id} poll_id={poll_id}>
+                  Share
+                </ShareButton>
               </div>
               <div className=" px-4 ">
                 <input
@@ -216,7 +220,7 @@ const PollPage = ({ params }: { params: { slug: string } }) => {
           </div>
         </div>
       </form>
-    </div>
+    </PollBackground>
   );
 };
 

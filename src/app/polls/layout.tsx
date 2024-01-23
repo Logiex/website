@@ -3,5 +3,5 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <div className="bg-[#EAE2B7] min-h-screen">{children}</div>;
+  return <div className="min-h-screen bg-white">{children}</div>;
 }

@@ -158,7 +158,7 @@ export default function Testing({ params }: { params: { slug: string } }) {
   const friends_input: {
     name: string;
     choice: string;
-  }[] = buds.map((bud, val) => {
+  }[] = buds.map((bud) => {
     return { name: bud.user.displayName, choice: bud.choice };
   });
 

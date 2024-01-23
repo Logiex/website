@@ -3,14 +3,26 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { copyHref } from "@/lib/utils";
+import { copyHref, copyLink } from "@/lib/utils";
 import { ReactNode } from "react";
 
-const ShareButton = ({ children }: { children: ReactNode }) => (
+const ShareButton = ({
+  children,
+  referrer,
+  poll_id,
+}: {
+  children: ReactNode;
+  referrer?: string;
+  poll_id?: string;
+}) => (
   <Popover
     onOpenChange={(val) => {
       //   val == true &&
-      val == true && copyHref();
+      val == true &&
+        copyLink({
+          subpath: `/polls/${poll_id}`,
+          query: `referrer=${referrer}`,
+        });
     }}
   >
     <PopoverTrigger className="p-2">{children}</PopoverTrigger>
