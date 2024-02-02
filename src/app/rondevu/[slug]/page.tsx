@@ -1,6 +1,6 @@
 "use client";
 import { gql, useQuery } from "@apollo/client";
-import { Pridi } from "next/font/google";
+import { Fredoka } from "next/font/google";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Heart, Send, CalendarPlus } from "lucide-react";
 import {
@@ -28,7 +28,7 @@ const VIEWRONDEVUQUERY = gql`
   }
 `;
 
-const pridi = Pridi({ subsets: ["latin"], weight: ["500"] });
+const fredoka = Fredoka({ subsets: ["latin"], weight: ["500"] });
 
 const parseDate = (date: string) => {
   const dateObject = new Date(date);
@@ -96,7 +96,7 @@ export default function Rondevu({ params }: { params: { slug: string } }) {
     </div>
   );
   return data ? (
-    <div className={`flex flex-col sm:p-24 sm:p-4 py-48 lg:p-64 lg:my-0 items-center lg:items-start  text-black ${pridi.className}`}>
+    <div className={`flex flex-col sm:p-24 sm:p-4 py-48 lg:p-64 lg:my-0 items-center lg:items-start  text-black ${fredoka.className}`}>
       <ProfileAndName
         name={activity.creator.displayName}
         profilepic={activity.creator.pictureLink}

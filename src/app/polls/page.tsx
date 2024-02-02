@@ -5,7 +5,8 @@ import {
   useFieldArray,
   Controller,
 } from "react-hook-form";
-import { Pridi } from "next/font/google";
+import { Fredoka } from "next/font/google";
+
 import { useState } from "react";
 import { toast } from "react-toastify";
 
@@ -19,7 +20,7 @@ type Inputs = {
 // const forbiddenVal = "dijsjsdijisisiijdsijjiijdsijsjisijsijdisdjisjdisjsjisdijijsijdjsjisijdsijdsijsdijdijsijdsdijsisddijdsijsdjisdijdssijsjidijdsij"
 // #TODO test the forbidden value on a poll val
 
-const pridi = Pridi({ subsets: ["latin"], weight: ["500"] });
+const fredoka = Fredoka({ subsets: ["latin"], weight: ["500"] });
 const PollPage = () => {
   const {
     register,
@@ -46,7 +47,7 @@ const PollPage = () => {
   return (
     /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
     <div
-      className={`flex min-h-screen flex-col justify-stretch ${pridi.className}`}
+      className={`flex min-h-screen flex-col justify-stretch ${fredoka.className}`}
     >
       <form
         onSubmit={handleSubmit(onSubmit)}

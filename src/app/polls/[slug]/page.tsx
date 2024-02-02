@@ -1,6 +1,6 @@
 "use client";
 import { useForm, SubmitHandler, useFieldArray } from "react-hook-form";
-import { Dongle, Pridi } from "next/font/google";
+import { Dongle, Fredoka } from "next/font/google";
 import { useEffect, useState } from "react";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { ToastContainer } from "react-toastify";
@@ -57,8 +57,7 @@ const RESPONDTOPOLL = gql`
   }
 `;
 
-const pridi = Pridi({ subsets: ["latin"], weight: ["500"] });
-const dongle = Dongle({ subsets: ["latin"], weight: ["400"] });
+const fredoka = Fredoka({ subsets: ["latin"], weight: ["500"] });
 const PollPage = ({ params }: { params: { slug: string } }) => {
   const poll_id = params.slug;
   const { push } = useRouter();
@@ -128,7 +127,7 @@ const PollPage = ({ params }: { params: { slug: string } }) => {
   return (
     /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
 
-    <PollBackground font_class={dongle.className}>
+    <PollBackground font_class={fredoka.className}>
       <ToastContainer
         position="top-right"
         autoClose={5000}
