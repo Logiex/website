@@ -1,5 +1,5 @@
 "use client";
-import { Pridi } from "next/font/google";
+import { Fredoka } from "next/font/google";
 import { useState } from "react";
 import { useForm, useFieldArray, SubmitHandler } from "react-hook-form";
 import { gql, useMutation } from "@apollo/client";
@@ -13,7 +13,7 @@ type FormInput = {
   options: { value: string }[];
 };
 
-const pridi = Pridi({ subsets: ["latin"], weight: ["500"] });
+const fredoka = Fredoka({ subsets: ["latin"], weight: ["500"] });
 
 const optionsArray = ["Option1", "Option2", "Option3", "Option4", "Option5"];
 const initialSize = 2;
@@ -47,9 +47,9 @@ const CreatePoll = () => {
 
   const OptionCollection = ({ index }: { index: number }) => {
     return (
-      <div className="py-4">
+      <div className="py-2">
         <input
-          className="bg-transparent text-2xl p-4 rounded-md	border-[#F77F00] border-2 focus:outline-none 	focus:border-[#D62828] w-full"
+          className="bg-transparent text-lg p-4 rounded-md	border-[#F77F00] border-2 focus:outline-none 	focus:border-[#D62828] w-full hover:scale-[1.08] hover:transform hover:ease-in-out duration-300"
           type="text"
           {...register(`options.${index}.value`)}
         />
@@ -105,10 +105,10 @@ const CreatePoll = () => {
     const arr = [2, 3, 4, 5];
 
     return (
-      <div className="flex">
+      <div className="flex mb-4">
         {arr.map((val, index) => (
           <div
-            className={`px-2 text-2xl mx-2 border rounded-md hover:border-black hover:cursor-pointer 
+            className={`px-2 text-lg mx-2 border rounded-md hover:border-black hover:cursor-pointer hover:scale-[1.08] hover:transform hover:ease-in-out duration-300
           ${selected == val ? "border-black" : "border-transparent"}
           `}
             key={index}
@@ -127,7 +127,7 @@ const CreatePoll = () => {
   };
 
   return (
-    <div className={`${pridi.className} text-black p-[4%] px-[15%]`}>
+    <div className={`${fredoka.className} text-black p-[4%] px-[15%]`}>
       <ToastContainer
         position="top-right"
         autoClose={5000}
@@ -147,16 +147,17 @@ const CreatePoll = () => {
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex-col flex">
-          <label className="text-5xl py-4">Question</label>
+          <label className="text-3xl py-4">Question</label>
           <input
             {...register("title")}
-            className="bg-transparent text-2xl p-4 rounded-md	border-[#F77F00] border-2 focus:outline-none 	focus:border-[#D62828]"
+            className="bg-transparent text-2xl p-4 rounded-md	border-[#F77F00] border-2 focus:outline-none 	focus:border-[#D62828]
+            hover:scale-[1.08] hover:transform hover:ease-in-out duration-300"
           />
         </div>
         <div>
-          <div className="text-5xl py-4">Answers</div>
-          <div className="flex p-4 items-center">
-            <div className="text-2xl pr-[10%]">Count</div>
+          <div className="text-3xl py-4 mt-2">Answers</div>
+          <div className="flex px-4 items-center">
+            <div className="text-xl pr-[10%]">Count</div>
             <PollButtons
               onSelectedChanged={(num) => {
                 const subarray = optionsArray.slice(0, num).map((option) => {
@@ -172,13 +173,13 @@ const CreatePoll = () => {
           return <OptionCollection key={index} index={index} />;
         })}
 
-        <div className="flex justify-end text-2xl md:center ">
-          <input
+      <div className="flex justify-end text-2xl ">
+        <input
             type="submit"
             value={"Submit Poll"}
-            className="hover:cursor-pointer p-2 hover:outline-black hover:outline"
-          />
-        </div>
+            className="p-2 bg-[#F77F00] rounded-lg hover:cursor-pointer hover:scale-[1.2] hover:transform hover:ease-in-out duration-300 "
+        />
+      </div>
       </form>
     </div>
   );

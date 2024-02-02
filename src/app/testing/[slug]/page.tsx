@@ -12,6 +12,7 @@ const GETPOLLQUERY = gql`
         option
         votes
       }
+      title
     }
     pollUser {
       _id
@@ -40,6 +41,7 @@ const UPDATEDISPLAYNAMEMUTATION = gql`
 type getPoll = {
   options: string[];
   results: { option: string; votes: number }[];
+  title: string;
 };
 
 const parseResults = (
@@ -51,6 +53,7 @@ const parseResults = (
         results: number;
       }[];
       total: number;
+      title: string;
     }
   | undefined => {
   if (!data) {
@@ -70,7 +73,7 @@ const parseResults = (
       results: Math.floor((val.votes / total) * 100),
     };
   });
-  return { graph: res, total: total };
+  return { graph: res, total: total, title: yoyo.title };
 };
 const parsePollUser = (
   data: any
@@ -140,7 +143,7 @@ const SubmitDisplayName = ({
 
 export default function Testing({ params }: { params: { slug: string } }) {
   const id = params.slug;
-  const { data, loading, } = useQuery(GETPOLLQUERY, {
+  const { data, loading } = useQuery(GETPOLLQUERY, {
     variables: {
       ID: id,
     },
@@ -155,10 +158,10 @@ export default function Testing({ params }: { params: { slug: string } }) {
   const friends_input: {
     name: string;
     choice: string;
-  }[] = buds.map((bud, val) => {
+  }[] = buds.map((bud) => {
     return { name: bud.user.displayName, choice: bud.choice };
   });
-  
+
   return (
     <div>
       {loading && (
@@ -177,6 +180,7 @@ export default function Testing({ params }: { params: { slug: string } }) {
           poll_id={id}
           referrer={user?.id}
           friends={friends_input}
+          title={result?.title}
         />
       ) : (
         <SubmitDisplayName onUsernameSubmitted={() => {}} />
