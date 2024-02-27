@@ -15,9 +15,13 @@ const config = {
       padding: "2rem",
       screens: {
         "2xl": "1400px",
-      },
+      }
     },
     extend: {
+      screens: {
+        "bp1" : "1169px",
+        "bp2" : "1088px"
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
