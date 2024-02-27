@@ -67,7 +67,7 @@ export default function Home() {
       <div className="flex flex-col md:flex-row items-center mb-6">
         <div className="md:w-[60%] mb-10 md:mr-[20%]">
         <h1 className={`${fredokaHeading.className} text-4xl text-center mb-5`}>Discover the potential for fun all around you</h1>
-        <p className={`${fredoka.className} text-[1.5rem] text-center`}>Ever had an idea for an activity, but weren't sure who else was 'down'? Rondevu is the solution. Our app is designed to seamlessly connect you with current events and activities in your area, while also showing you who shares your interests at any given moment. Whether it's grabbing coffee, hitting the gym, or attending a local event, 
+        <p className={`${fredoka.className} text-[1.5rem] text-center`}>Ever had an idea for an activity, but weren&apos;t sure who else was &lsquo;down&rsquo;? Rondevu is the solution. Our app is designed to seamlessly connect you with current events and activities in your area, while also showing you who shares your interests at any given moment. Whether it&apos;s grabbing coffee, hitting the gym, or attending a local event, 
           Rondevu helps you find like-minded individuals and turn your ideas into memorable experiences.</p>
         </div>
           <div className="overflow-hidden">
